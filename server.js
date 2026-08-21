@@ -1,7 +1,6 @@
 import express from 'express';
 import path from 'path';
 import { fileURLToPath } from 'url';
-import proxy from 'express-http-proxy';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -45,38 +44,8 @@ app.get('/poop.png', (req, res) => {
   res.sendFile(path.join(__dirname, 'poop.png'));
 });
 
-// Proxy route for the main page of the embedded application
-app.use('/classroom-embed', proxy('https://mathscience.glenoriebakery.com.au/', {
-  proxyReqOptDecorator: function(proxyReqOpts, srcReq) {
-    proxyReqOpts.headers['host'] = 'mathscience.glenoriebakery.com.au';
-    return proxyReqOpts;
-  },
-  userResHeaderDecorator(headers, userReq, userRes, proxyReq, proxyRes) {
-    const newHeaders = { ...headers };
-    // Remove frame-blocking headers
-    delete newHeaders['x-frame-options'];
-    delete newHeaders['content-security-policy'];
-    return newHeaders;
-  },
-  proxyPathResolver: function(req) {
-    return '/';
-  }
-}));
-
-// Fallback proxy to capture all other requests (such as /assets/*, fonts, and stylesheets)
-app.use('/', proxy('https://mathscience.glenoriebakery.com.au/', {
-  proxyReqOptDecorator: function(proxyReqOpts, srcReq) {
-    proxyReqOpts.headers['host'] = 'mathscience.glenoriebakery.com.au';
-    return proxyReqOpts;
-  },
-  userResHeaderDecorator(headers, userReq, userRes, proxyReq, proxyRes) {
-    const newHeaders = { ...headers };
-    // Remove frame-blocking headers
-    delete newHeaders['x-frame-options'];
-    delete newHeaders['content-security-policy'];
-    return newHeaders;
-  }
-}));
+// Static files (for assets if any)
+app.use(express.static(__dirname));
 
 app.listen(PORT, '0.0.0.0', () => {
   console.log(`Server running on http://0.0.0.0:${PORT}`);
