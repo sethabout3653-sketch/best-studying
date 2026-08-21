@@ -1,0 +1,12 @@
+{
+  "name": "Clever Portal",
+  "description": "An interactive replica of the Clever Portal.",
+  "requestFramePermissions": [
+    "camera",
+    "microphone",
+    "geolocation"
+  ],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}

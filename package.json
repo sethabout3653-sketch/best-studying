@@ -1,0 +1,16 @@
+{
+  "name": "clever-portal",
+  "version": "1.0.0",
+  "description": "A portal clone.",
+  "type": "module",
+  "scripts": {
+    "dev": "node server.js",
+    "build": "echo 'Build complete'",
+    "start": "node server.js",
+    "lint": "echo 'No linting needed'"
+  },
+  "dependencies": {
+    "express": "^4.19.2",
+    "express-http-proxy": "^2.1.2"
+  }
+}
